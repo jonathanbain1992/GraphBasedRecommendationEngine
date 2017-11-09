@@ -54,10 +54,75 @@ public class Graph {
 
 
     public int[][] generateMatrix(){
-        int[][] returnArr = new int[(int)Math.sqrt(globalNeighbourhood.size())][(int)Math.sqrt(globalNeighbourhood.size())];
+        int[][] returnArr = new int[(int)Math.pow(globalNeighbourhood.size(), 2)][(int)Math.pow(globalNeighbourhood.size(), 2)];
 
-
+        int i = 0;
+        for (Vertex v1: globalNeighbourhood){
+            for (Vertex v2: globalNeighbourhood){
+                if (v1.containsNeighbour(v2)){
+                    returnArr[i/globalNeighbourhood.size()][i%globalNeighbourhood.size()] = 1;
+                }
+                i++;
             }
+        }
 
+        return returnArr;
+
+    }
+
+    public void printMatrix(){
+        int[][] matrix = generateMatrix();
+        for (int i= 0; i < Math.sqrt(matrix.length); i++){
+            for (int j = 0; j < Math.sqrt(matrix.length); j++) {
+                if (i==0 && j==0 || i==Math.sqrt(matrix.length)-1 && j==0){
+                    System.out.print("[ ");
+                } else if (i!=0 && j==0){
+                    System.out.print("| ");
+                }
+
+                System.out.print(matrix[i][j]);
+
+                if (i==0 && j==Math.sqrt(matrix.length)-1 || i== Math.sqrt(matrix.length)-1 &&j==Math.sqrt(matrix.length)-1){
+                    System.out.print(" ]");
+                } else if (i!=0 && j==Math.sqrt(matrix.length)-1){
+                    System.out.print(" |");
+                }
+            }
+            System.out.print("\n");
+        }
+        if (isMatrixDiagonal()){
+            System.out.println("Matrix is diagonal.");
+        }
+    }
+
+    public boolean isMatrixDiagonal(){
+        int[][] matrix = generateMatrix();
+        int[][] flipped = transpose(matrix);
+
+        for (int i = 0; i < globalNeighbourhood.size(); i++){
+            for (int j=0; j< globalNeighbourhood.size(); j++){
+                if (matrix[i][j] != flipped[i][j]){
+                    return false;
+                }
+            }
+        }
+
+        return true;
+
+    }
+
+
+
+    public int[][] transpose(int[][] matrix){
+        int dimension = globalNeighbourhood.size();
+        int[][] flipped = new int[dimension][dimension];
+
+        for (int i=0; i < dimension; i++){
+            for (int j=0; j< dimension; j++){
+                flipped[i][j] = matrix[j][i];
+            }
+        }
+        return flipped;
+    }
 
 }
