@@ -1,5 +1,6 @@
 package com.company;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
@@ -17,6 +18,8 @@ public class Main {
         g.setNeighbourhood(0.3);
 
         g.printMatrix();
+        //just so we can see the array
+       System.out.println(Arrays.toString(g.generateVector()));
     }
 
 }

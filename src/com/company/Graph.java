@@ -85,6 +85,38 @@ public class Graph {
 
     }
 
+    public int calculateDiagonal(int index, int size){
+        int i = index/size;
+        int j = index%size;
+        return calculateIndex((size-j), (size-i), size);
+    }
+
+    public int calculateIndex(int i, int j, int length){
+        return length*(i-1)+j-1;
+    }
+
+    //For every vertex, go through it's edge list and make the vector[m (or n) * vertex id + the neighbour's id.
+    //By simply storing an incremental ID we can cut down a lot of computations as shown in the time performance VS matrix rendering.
+
+    public int[] generateVector() {
+
+        long time = System.nanoTime();
+
+
+        int[] returnArr = new int[(int)Math.pow(globalNeighbourhood.size(),2)];
+        System.out.println("Array Length" +returnArr.length);
+        for(Vertex v : globalNeighbourhood) {
+
+            for (Edge e : v.neighbourhood) {
+
+
+                returnArr[(v.id*globalNeighbourhood.size())+e.getNeighbour().id]=1;
+            }
+        }
+        System.out.println("Time Taken To Generate Vector:"+(System.nanoTime()-time));
+        return returnArr;
+    }
+
     public int[][] transpose(int[][] matrix){
         long time = System.nanoTime();
         int dimension = globalNeighbourhood.size();
@@ -153,6 +185,8 @@ public class Graph {
             System.out.println(e.getStackTrace());
         }
     }
+
+    //
 
 
 

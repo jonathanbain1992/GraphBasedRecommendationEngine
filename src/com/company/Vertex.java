@@ -4,10 +4,15 @@ import java.util.ArrayList;
 
 public class Vertex {
 
-    private ArrayList<Edge> neighbourhood;
+    public ArrayList<Edge> neighbourhood;
+
+    public static int nVertexes = 0;
+    public int id;
 
     public Vertex(){
         this.neighbourhood = new ArrayList<Edge>();
+        id = nVertexes++;
+
     }
 
     //if we want to give it some neighbours by default for whatever reason.
@@ -19,7 +24,10 @@ public class Vertex {
         return this.hashCode();
     }
 
+
     //edge contains vertex object which is identified by its hashcode.
+
+
 
     public boolean containsNeighbour(Vertex v){
         for(Edge e : neighbourhood){
